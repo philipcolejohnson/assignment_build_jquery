@@ -112,6 +112,7 @@ function JQueryObject(collection) {
             return this.collection[0].style[attr];
         }
     }
+
     this.height = function(val) {
         if (val) {
             this.each(function(element) {
@@ -139,13 +140,33 @@ function JQueryObject(collection) {
             }
         }
     }
+
+    this.attr = function(attribute, val) {
+        if (val) {
+            this.each(function(element) {
+                element[attribute] = val;
+            });
+        } else {
+            return this.collection[0][attribute];
+        }
+    }
+
+    this.html = function(val) {
+        if (val) {
+            this.each(function(element) {
+                element.innerHTML = val;
+            });
+        } else {
+            return this.collection[0].innerHTML;
+        }
+    }
 }
 
 function jQuery(selector) {
     if (selector[0] === ".") {
         return new JQueryObject(document.getElementsByClassName(selector.slice(1)));
     } else if (selector[0] === '#') {
-        return new JQueryObject(document.getElementById(selector.slice(1)));
+        return new JQueryObject([document.getElementById(selector.slice(1))]);
     } else if (selector instanceof HTMLElement) {
         return new JQueryObject([selector]);
     } else {
